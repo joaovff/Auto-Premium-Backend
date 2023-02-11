@@ -26,6 +26,9 @@ router.post(
           .json({ message: "Title and description are mandatory fields." });
         return;
       }
+      /* Confirmar com o Xico, sobre ao criar um novo announcement,
+         devemos passar a propriedade do _id do user, para associar
+         um ao outro */
       const response = await Announcement.create({
         title,
         description,
