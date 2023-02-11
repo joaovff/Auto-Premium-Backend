@@ -4,15 +4,11 @@ const announcementSchema = new Schema(
   {
     title: String,
     description: String,
-    image: String,
-    kms: Number,
+    make: String,
+    model: String,
     year: Number,
-    specs: [
-      {
-        brand: String,
-        model: String,
-      },
-    ],
+    kms: Number,
+    image: String,
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",

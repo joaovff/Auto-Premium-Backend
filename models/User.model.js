@@ -4,10 +4,14 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      required: [true, "Email is required."],
+      required: true,
       unique: true,
-      lowercase: true,
       trim: true,
+      lowercase: true,
+      match: [
+        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+        "Please provide a valid email.",
+      ],
     },
     password: {
       type: String,
@@ -20,7 +24,7 @@ const userSchema = new Schema(
     phone: {
       type: Number,
     },
-    Announcement: [
+    announcement: [
       {
         type: Schema.Types.ObjectId,
         ref: "Announcement",
