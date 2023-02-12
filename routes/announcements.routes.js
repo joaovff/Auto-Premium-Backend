@@ -55,4 +55,32 @@ router.get("/:announcementId", async (req, res) => {
   }
 });
 
+//UPDATE
+router.put("/:announcementId", async (req, res) => {
+  try {
+    const { title, description, make, model, year, kms, image } = req.body;
+    const response = await Announcement.findByIdAndUpdate(
+      req.params.announcementId,
+      { title, description, make, model, year, kms, image },
+      { new: true }
+    );
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(200).json({ message: e });
+  }
+});
+
+router.delete("/:announcementId", async (req, res) => {
+  try {
+    await Announcement.findByIdAndDelete(req.params.announcementId);
+    res
+      .status(200)
+      .json({
+        message: `Project with id ${req.params.announcementId} was deleted`,
+      });
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
+
 module.exports = router;
