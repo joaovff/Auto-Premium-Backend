@@ -9,6 +9,7 @@ const announcementSchema = new Schema(
     year: Number,
     kms: Number,
     image: String,
+    price: Number,
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",

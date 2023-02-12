@@ -19,7 +19,8 @@ router.post(
   /* isAuthenticated, */ async (req, res) => {
     try {
       //const userId = req.payload._id;
-      const { title, description, image, kms, year, make, model } = req.body;
+      const { title, description, image, kms, year, make, model, price } =
+        req.body;
       if (!title || !description) {
         res
           .status(400)
@@ -37,6 +38,7 @@ router.post(
         year,
         make,
         model,
+        price,
       });
       res.status(200).json(response);
     } catch (e) {
@@ -58,10 +60,11 @@ router.get("/:announcementId", async (req, res) => {
 //UPDATE
 router.put("/:announcementId", async (req, res) => {
   try {
-    const { title, description, make, model, year, kms, image } = req.body;
+    const { title, description, make, model, year, kms, image, price } =
+      req.body;
     const response = await Announcement.findByIdAndUpdate(
       req.params.announcementId,
-      { title, description, make, model, year, kms, image },
+      { title, description, make, model, year, kms, image, price },
       { new: true }
     );
     res.status(200).json(response);
@@ -70,14 +73,22 @@ router.put("/:announcementId", async (req, res) => {
   }
 });
 
+//UPLOAD IMAGE
+router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
+  try {
+    res.status(200).json({ fileUrl: req.file.path });
+  } catch (e) {
+    res.status(500).json({ message: "an error occurred" });
+  }
+});
+
+//DELETE
 router.delete("/:announcementId", async (req, res) => {
   try {
     await Announcement.findByIdAndDelete(req.params.announcementId);
-    res
-      .status(200)
-      .json({
-        message: `Project with id ${req.params.announcementId} was deleted`,
-      });
+    res.status(200).json({
+      message: `Project with id ${req.params.announcementId} was deleted`,
+    });
   } catch (e) {
     res.status(500).json({ message: e });
   }
