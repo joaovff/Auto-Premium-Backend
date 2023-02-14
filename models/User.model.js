@@ -24,7 +24,7 @@ const userSchema = new Schema(
     phone: {
       type: Number,
     },
-    announcement: [
+    announcements: [
       {
         type: Schema.Types.ObjectId,
         ref: "Announcement",

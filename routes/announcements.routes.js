@@ -14,38 +14,35 @@ router.get("/", async (req, res) => {
 });
 
 // POST - create a announcement
-router.post(
-  "/create",
-  /* isAuthenticated, */ async (req, res) => {
-    try {
-      //const userId = req.payload._id;
-      const { title, description, image, kms, year, make, model, price } =
-        req.body;
-      if (!title || !description) {
-        res
-          .status(400)
-          .json({ message: "Title and description are mandatory fields." });
-        return;
-      }
-      /* Confirmar com o Xico, sobre ao criar um novo announcement,
+router.post("/create", isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.payload._id;
+    const { title, description, image, kms, year, make, model, price, user } =
+      req.body;
+    if ((!title || !description, !image, !kms, !year, !model, !price)) {
+      res.status(400).json({ message: "Missing mandatory fields." });
+      return;
+    }
+    /* Confirmar com o Xico, sobre ao criar um novo announcement,
          devemos passar a propriedade do _id do user, para associar
          um ao outro */
-      const response = await Announcement.create({
-        title,
-        description,
-        image,
-        kms,
-        year,
-        make,
-        model,
-        price,
-      });
-      res.status(200).json(response);
-    } catch (e) {
-      res.status(500).json({ message: e });
-    }
+    const response = await Announcement.create({
+      title,
+      description,
+      image,
+      kms,
+      year,
+      make,
+      model,
+      price,
+      user: userId,
+    });
+    console.log(userId);
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ message: e });
   }
-);
+});
 
 // GET - looking for one specific announcement
 router.get("/:announcementId", async (req, res) => {
