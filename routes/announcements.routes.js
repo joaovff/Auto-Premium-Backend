@@ -55,7 +55,7 @@ router.get("/:announcementId", async (req, res) => {
 });
 
 //UPDATE
-router.put("/:announcementId", async (req, res) => {
+router.put("/edit/:announcementId", async (req, res) => {
   try {
     const { title, description, make, model, year, kms, image, price } =
       req.body;
