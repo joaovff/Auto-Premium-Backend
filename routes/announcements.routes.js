@@ -17,8 +17,21 @@ router.get("/", async (req, res) => {
 router.post("/create", isAuthenticated, async (req, res) => {
   try {
     const userId = req.payload._id;
-    const { title, description, image, kms, year, make, model, price, user } =
-      req.body;
+    const {
+      title,
+      description,
+      make,
+      model,
+      color,
+      year,
+      kms,
+      image,
+      price,
+      localization,
+      hp,
+      engineDisplacement,
+      fuel,
+    } = req.body;
     if ((!title || !description, !image, !kms, !year, !model, !price)) {
       res.status(400).json({ message: "Missing mandatory fields." });
       return;
@@ -29,12 +42,17 @@ router.post("/create", isAuthenticated, async (req, res) => {
     const response = await Announcement.create({
       title,
       description,
-      image,
-      kms,
-      year,
       make,
       model,
+      color,
+      year,
+      kms,
+      image,
       price,
+      localization,
+      hp,
+      engineDisplacement,
+      fuel,
       user: userId,
     });
     console.log(userId);
@@ -57,11 +75,38 @@ router.get("/:announcementId", async (req, res) => {
 //UPDATE
 router.put("/edit/:announcementId", async (req, res) => {
   try {
-    const { title, description, make, model, year, kms, image, price } =
-      req.body;
+    const {
+      title,
+      description,
+      make,
+      model,
+      color,
+      year,
+      kms,
+      image,
+      price,
+      localization,
+      hp,
+      engineDisplacement,
+      fuel,
+    } = req.body;
     const response = await Announcement.findByIdAndUpdate(
       req.params.announcementId,
-      { title, description, make, model, year, kms, image, price },
+      {
+        title,
+        description,
+        make,
+        model,
+        color,
+        year,
+        kms,
+        image,
+        price,
+        localization,
+        hp,
+        engineDisplacement,
+        fuel,
+      },
       { new: true }
     );
     res.status(200).json(response);
