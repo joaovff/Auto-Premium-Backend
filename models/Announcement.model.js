@@ -32,12 +32,11 @@ const announcementSchema = new Schema(
       required: true,
       min: 0,
     },
-    image: [
+    image: 
       {
         type: String,
         required: true,
       },
-    ],
     price: {
       type: Number,
       required: true,
