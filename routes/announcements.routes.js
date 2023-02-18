@@ -47,7 +47,9 @@ router.post("/create", isAuthenticated, async (req, res) => {
 // GET - looking for one specific announcement
 router.get("/:announcementId", async (req, res) => {
   try {
-    const response = await Announcement.findById(req.params.announcementId);
+    const response = await Announcement.findById(
+      req.params.announcementId
+    ).populate("user");
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
