@@ -21,6 +21,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
+    picture: {
+      type: String,
+    },
     phone: {
       type: Number,
     },
@@ -30,6 +33,9 @@ const userSchema = new Schema(
         ref: "Announcement",
       },
     ],
+    favorites: {
+      type: Array,
+    },
   },
   {
     timestamps: true,

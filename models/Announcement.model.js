@@ -18,6 +18,10 @@ const announcementSchema = new Schema(
       type: String,
       required: true,
     },
+    color: {
+      type: String,
+      required: true,
+    },
     year: {
       type: Number,
       required: true,
@@ -42,6 +46,25 @@ const announcementSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+    localization: {
+      type: String,
+      require: true,
+    },
+    hp: {
+      type: Number,
+      min: 0,
+      required: true,
+    },
+    engineDisplacement: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    fuel: {
+      type: String,
+      enum: ["gasoline", "diesel", "eletric", "hybrid"],
+      required: true,
     },
   },
   {
