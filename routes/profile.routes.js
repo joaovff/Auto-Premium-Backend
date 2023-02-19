@@ -6,11 +6,24 @@ const fileUpload = require("../config/cloudinary");
 router.get("/:userId", async (req, res) => {
   try {
     const response = await User.findById(req.params.userId);
+    console.log("this is", response)
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
   }
 });
+
+
+//Profile Settings (edit and delete)
+router.get("/settings/:userId", async (req, res) => {
+  try {
+    const response = await User.findById(req.params.userId);
+    res.status(200).json(response)
+  } catch (e) {
+    res.status(500).json({message: e})
+  }
+})
+
 
 //Edit a user
 router.put("/edit/:userId", async (req, res) => {
