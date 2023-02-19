@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Announcement = require("../models/Announcement.model");
 const fileUpload = require("../config/cloudinary");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const User = require("../models/User.model");
 
 // GET - gets all announcements
 router.get("/", async (req, res) => {
@@ -55,7 +56,11 @@ router.post("/create", isAuthenticated, async (req, res) => {
       fuel,
       user: userId,
     });
-    console.log(userId);
+
+    await User.findByIdAndUpdate(userId, {
+      $push: { announcements: response },
+    });
+    
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
@@ -111,6 +116,7 @@ router.put("/edit/:announcementId", async (req, res) => {
       },
       { new: true }
     );
+
     res.status(200).json(response);
   } catch (e) {
     res.status(200).json({ message: e });
