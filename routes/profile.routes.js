@@ -38,8 +38,6 @@ router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
   }
 });
 
-module.exports = router;
-
 //Profile Settings (edit and delete)
 router.get("/settings/:userId", async (req, res) => {
   try {
@@ -49,3 +47,31 @@ router.get("/settings/:userId", async (req, res) => {
     res.status(500).json({ message: e });
   }
 });
+
+router.put("/favorites/:userId", async (req, res) => {
+  try {
+    const { itemId } = req.body;
+    const response = await User.findByIdAndUpdate(
+      req.params.userId,
+      { $push: { favorites: itemId } },
+      { new: true }
+    );
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
+
+
+router.get("/favorites/:userId", async (req, res) => {
+  try{
+    const response = await User.findById(req.params.userId)
+    console.log(response)
+    res.status(200).json(response)
+
+  } catch (e) {
+    res.status(500).json({message: e})
+  }
+})
+
+module.exports = router;
