@@ -72,6 +72,21 @@ router.get("/favorites/:userId", async (req, res) => {
   } catch (e) {
     res.status(500).json({message: e})
   }
-})
+});
+
+
+router.patch("/favorites/:userId", async (req, res) => {
+  try { 
+    const { itemId } = req.body;
+    const response = await User.findByIdAndUpdate(
+      req.params.userId,
+      { $pull: { favorites: itemId } },
+      { new: true }
+    );
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
 
 module.exports = router;
