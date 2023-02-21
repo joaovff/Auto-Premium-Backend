@@ -66,7 +66,6 @@ router.put("/favorites/:userId", async (req, res) => {
 router.get("/favorites/:userId", async (req, res) => {
   try{
     const response = await User.findById(req.params.userId)
-    console.log(response)
     res.status(200).json(response)
 
   } catch (e) {
