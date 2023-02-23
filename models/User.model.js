@@ -34,9 +34,10 @@ const userSchema = new Schema(
         ref: "Announcement",
       },
     ],
-    favorites: {
-      type: Array,
-    },
+    favorites: [{
+      type: Schema.Types.ObjectId,
+      ref: "Announcement",
+    }],
   },
   {
     timestamps: true,

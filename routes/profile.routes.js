@@ -6,7 +6,7 @@ const fileUpload = require("../config/cloudinary");
 router.get("/:userId", async (req, res) => {
   try {
     const response = await User.findById(req.params.userId).populate(
-      "announcements"
+      "announcements favorites"
     );
     res.status(200).json(response);
   } catch (e) {
