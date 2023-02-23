@@ -62,20 +62,17 @@ router.put("/favorites/:userId", async (req, res) => {
   }
 });
 
-
 router.get("/favorites/:userId", async (req, res) => {
-  try{
-    const response = await User.findById(req.params.userId)
-    res.status(200).json(response)
-
+  try {
+    const response = await User.findById(req.params.userId);
+    res.status(200).json(response);
   } catch (e) {
-    res.status(500).json({message: e})
+    res.status(500).json({ message: e });
   }
 });
 
-
 router.patch("/favorites/:userId", async (req, res) => {
-  try { 
+  try {
     const { itemId } = req.body;
     const response = await User.findByIdAndUpdate(
       req.params.userId,
