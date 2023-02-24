@@ -6,7 +6,7 @@ const fileUpload = require("../config/cloudinary");
 router.get("/:userId", async (req, res) => {
   try {
     const response = await User.findById(req.params.userId).populate(
-      "announcements favorites"
+      "announcements"
     );
     res.status(200).json(response);
   } catch (e) {
@@ -19,15 +19,16 @@ router.get("/:userId", async (req, res) => {
 //get profile
 router.get("/settings/:userId", async (req, res) => {
   try {
-    const response = await User.findById(req.params.userId).populate("announcements");
+    const response = await User.findById(req.params.userId).populate(
+      "announcements"
+    );
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
   }
 });
 
-
-//edit user 
+//edit user
 router.put("/edit/:userId", async (req, res) => {
   try {
     const { email, password, name, picture } = req.body;
@@ -44,7 +45,6 @@ router.put("/edit/:userId", async (req, res) => {
 
 //delete profile
 
-
 //UPLOAD IMAGE
 router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
   try {
@@ -53,8 +53,6 @@ router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
     res.status(500).json({ message: "an error occurred" });
   }
 });
-
-
 
 //FAVORITES ROUTES
 
@@ -73,16 +71,17 @@ router.put("/favorites/:userId", async (req, res) => {
   }
 });
 
-//Getting favorites 
+//Getting favorites
 router.get("/favorites/:userId", async (req, res) => {
   try {
-    const response = await User.findById(req.params.userId).populate("favorites");
+    const response = await User.findById(req.params.userId).populate(
+      "favorites"
+    );
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
   }
 });
-
 
 //Delete favorite
 router.patch("/favorites/:userId", async (req, res) => {
