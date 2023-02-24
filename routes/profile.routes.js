@@ -14,7 +14,20 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-//Edit a user
+//Profile settings (edit and delete)
+
+//get profile
+router.get("/settings/:userId", async (req, res) => {
+  try {
+    const response = await User.findById(req.params.userId).populate("announcements");
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
+
+
+//edit user 
 router.put("/edit/:userId", async (req, res) => {
   try {
     const { email, password, name, picture } = req.body;
@@ -29,6 +42,9 @@ router.put("/edit/:userId", async (req, res) => {
   }
 });
 
+//delete profile
+
+
 //UPLOAD IMAGE
 router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
   try {
@@ -38,16 +54,11 @@ router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
   }
 });
 
-//Profile Settings (edit and delete)
-router.get("/settings/:userId", async (req, res) => {
-  try {
-    const response = await User.findById(req.params.userId);
-    res.status(200).json(response);
-  } catch (e) {
-    res.status(500).json({ message: e });
-  }
-});
 
+
+//FAVORITES ROUTES
+
+//Adding a favorite
 router.put("/favorites/:userId", async (req, res) => {
   try {
     const { itemId } = req.body;
@@ -62,15 +73,18 @@ router.put("/favorites/:userId", async (req, res) => {
   }
 });
 
+//Getting favorites 
 router.get("/favorites/:userId", async (req, res) => {
   try {
-    const response = await User.findById(req.params.userId);
+    const response = await User.findById(req.params.userId).populate("favorites");
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
   }
 });
 
+
+//Delete favorite
 router.patch("/favorites/:userId", async (req, res) => {
   try {
     const { itemId } = req.body;
