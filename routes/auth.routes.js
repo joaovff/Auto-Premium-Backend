@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fileUpload = require("../config/cloudinary")
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -18,7 +19,9 @@ const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
-  const { email, password, name, phone } = req.body;
+  const { email, password, name, phone, picture } = req.body;
+
+  console.log('BODY: ', req.body);
 
   // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "") {
@@ -56,9 +59,22 @@ router.post("/signup", (req, res, next) => {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
 
+      //UPLOAD IMAGE
+      router.post(
+        "/upload",
+        fileUpload.single("fileName"),
+        async (req, res) => {
+          try {
+            res.status(200).json({ fileUrl: req.file.path });
+          } catch (e) {
+            res.status(500).json({ message: "an error occurred" });
+          }
+        }
+      );
+
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name, phone });
+      return User.create({ email, password: hashedPassword, name, phone, picture });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
