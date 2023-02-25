@@ -34,9 +34,19 @@ router.post("/create", isAuthenticated, async (req, res) => {
       fuel,
       doors,
       traction,
-      gearBox
+      gearBox,
     } = req.body;
-    if ((!title || !description, !image, !kms, !year, !model, !price, !doors, !traction, !gearBox)) {
+    if (
+      (!title || !description,
+      !images,
+      !kms,
+      !year,
+      !model,
+      !price,
+      !doors,
+      !traction,
+      !gearBox)
+    ) {
       res.status(400).json({ message: "Missing mandatory fields." });
       return;
     }
@@ -66,7 +76,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       $push: { announcements: response },
     });
-    
+
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
@@ -104,7 +114,7 @@ router.put("/edit/:announcementId", async (req, res) => {
       fuel,
       doors,
       traction,
-      gearBox
+      gearBox,
     } = req.body;
     const response = await Announcement.findByIdAndUpdate(
       req.params.announcementId,
@@ -124,7 +134,7 @@ router.put("/edit/:announcementId", async (req, res) => {
         fuel,
         doors,
         traction,
-        gearBox
+        gearBox,
       },
       { new: true }
     );
