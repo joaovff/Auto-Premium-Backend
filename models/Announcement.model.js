@@ -65,6 +65,20 @@ const announcementSchema = new Schema(
       enum: ["gasoline", "diesel", "eletric", "hybrid"],
       required: true,
     },
+    doors: {
+      type: Number,
+      required: true
+    },
+    traction: {
+      type: String,
+      required: true,
+      enum: ["rwd", "fwd", "awd"]
+    },
+    gearBox: {
+      type: String,
+      required: true,
+      enum: ["automatic", "manual"]
+    }
   },
   {
     timestamps: true,
