@@ -26,14 +26,14 @@ router.post("/create", isAuthenticated, async (req, res) => {
       color,
       year,
       kms,
-      image,
+      images,
       price,
       localization,
       hp,
       engineDisplacement,
       fuel,
     } = req.body;
-    if ((!title || !description, !image, !kms, !year, !model, !price)) {
+    if ((!title || !description, !images, !kms, !year, !model, !price)) {
       res.status(400).json({ message: "Missing mandatory fields." });
       return;
     }
@@ -48,7 +48,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
       color,
       year,
       kms,
-      image,
+      images,
       price,
       localization,
       hp,
@@ -90,7 +90,7 @@ router.put("/edit/:announcementId", async (req, res) => {
       color,
       year,
       kms,
-      image,
+      images,
       price,
       localization,
       hp,
@@ -107,7 +107,7 @@ router.put("/edit/:announcementId", async (req, res) => {
         color,
         year,
         kms,
-        image,
+        images,
         price,
         localization,
         hp,
