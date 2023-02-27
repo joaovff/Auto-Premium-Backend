@@ -36,7 +36,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
       traction,
       gearBox
     } = req.body;
-    if ((!title || !description, !image, !kms, !year, !model, !price, !doors, !traction, !gearBox)) {
+    if ((!title || !description, !images, !kms, !year, !model, !price, !doors, !traction, !gearBox)) {
       res.status(400).json({ message: "Missing mandatory fields." });
       return;
     }
