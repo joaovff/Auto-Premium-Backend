@@ -13,16 +13,14 @@ router.post("/send-mail", async (req, res) => {
     },
   });
   const message = {
-    from: "noreplay@auto-premium.pt",
-    to: "offers@auto-premium.pt",
+    from: "noreply@auto-premium.pt",
+    to: `${email}`,
     subject: `Your vehicle has received an offer! Auto-Premium`,
     text: `
     Name: ${name},
     Email: ${email},
     Phone: ${phone},
-    Offer: ${offer.toLocaleString("pt-pt", {
-      minimumFractionDigits: 2,
-    })} €.
+    Offer: ${offer} €.
 
     ${msg}`,
     html: `
