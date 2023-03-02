@@ -31,10 +31,10 @@ router.get("/settings/:userId", async (req, res) => {
 //edit user
 router.put("/edit/:userId", async (req, res) => {
   try {
-    const { email, password, name, picture } = req.body;
+    const { email, name } = req.body;
     const response = await User.findByIdAndUpdate(
       req.params.userId,
-      { email, password, name, picture },
+      { email, name },
       { new: true }
     );
     res.status(200).json(response);
