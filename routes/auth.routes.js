@@ -21,8 +21,6 @@ const saltRounds = 10;
 router.post("/signup", (req, res, next) => {
   const { email, password, name, phone, picture } = req.body;
 
-  console.log("BODY: ", req.body);
-
   // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "") {
     res.status(400).json({ message: "Provide email, password and name" });
@@ -88,7 +86,7 @@ router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
   try {
     res.status(200).json({ fileUrl: req.file.path });
   } catch (e) {
-    res.status(500).json({ message: "an error occurred" });
+    res.status(500).json({ message: "An error occurred." });
   }
 });
 
@@ -98,19 +96,19 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({ message: "missing fields" });
+      res.status(400).json({ message: "All fields are mandatory to login." });
       return;
     }
 
     const foundUser = await User.findOne({ email });
     if (!foundUser) {
-      res.status(401).json({ message: "invalid login" });
+      res.status(401).json({ message: "Invalid login." });
       return;
     }
 
     const isPasswordCorrect = bcrypt.compareSync(password, foundUser.password);
     if (!isPasswordCorrect) {
-      res.status(401).json({ message: "invalid login" });
+      res.status(401).json({ message: "Invalid login." });
       return;
     }
 
