@@ -88,7 +88,7 @@ router.get("/:announcementId", async (req, res) => {
   try {
     const response = await Announcement.findById(
       req.params.announcementId
-    ).populate("user");
+    ).populate("user localization");
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
