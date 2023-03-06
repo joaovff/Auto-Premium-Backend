@@ -1,49 +1,28 @@
 const router = require("express").Router();
-const nodemailer = require("nodemailer");
+const { Vonage } = require("@vonage/server-sdk");
 
-router.post("/send-mail", async (req, res) => {
-  const { name, email, phone, offer, msg } = req.body;
-
-  const transport = nodemailer.createTransport({
-    host: process.env.HOST,
-    port: process.env.MAIL_PORT,
-    auth: {
-      user: process.env.USER,
-      pass: process.env.PASS,
-    },
+router.post("/send-sms", (req, res) => {
+  const { to, text } = req.body;
+  const vonage = new Vonage({
+    apiKey: process.env.VONAGE_KEY,
+    apiSecret: process.env.VONAGE_SECRET,
   });
-  const message = {
-    from: "noreply@auto-premium.pt",
-    to: `${email}`,
-    subject: `Your vehicle has received an offer! Auto-Premium`,
-    text: `
-    Name: ${name},
-    Email: ${email},
-    Phone: ${phone},
-    Offer: ${offer} €.
 
-    ${msg}`,
-    html: `
-    <p><b>Name:</b> ${name}</p>
-    <p><b>Email:</b> ${email}</p>
-    <p><b>Phone:</b> ${phone}</p>
-    <p><b>Offer:</b> ${offer.toLocaleString("pt-pt", {
-      minimumFractionDigits: 2,
-    })} €.</p>
-
-    ${msg}`,
-  };
-
-  transport.sendMail(message, (err) => {
-    if (err) {
-      return res.status(404).json({
-        erro: true,
-        message: "Failed to send the email!",
+  async function sendSMS() {
+    try {
+      const resp = await vonage.sms.send({
+        from: process.env.VONAGE_NUMBER,
+        to,
+        text,
       });
-    } else {
-      res.status(200).json({ message: "Offer sent!" });
+      res.status(200).json("Message sent successfully");
+    } catch (e) {
+      console.log("There was an error sending the message.");
+      res.status(500).json(`Error sending message: ${e}`);
     }
-  });
+  }
+
+  sendSMS();
 });
 
 module.exports = router;
