@@ -83,7 +83,7 @@ router.put("/edit/:userId", async (req, res) => {
   }
 });
 
-//delete profile
+
 
 //UPLOAD IMAGE
 router.post("/upload", fileUpload.single("fileName"), async (req, res) => {

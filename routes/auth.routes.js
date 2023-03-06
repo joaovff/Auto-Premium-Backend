@@ -13,6 +13,7 @@ const User = require("../models/User.model");
 
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const Announcement = require("../models/Announcement.model");
 
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
@@ -128,6 +129,19 @@ router.post("/login", async (req, res) => {
 
 router.get("/verify", isAuthenticated, (req, res) => {
   res.status(200).json(req.payload);
+});
+
+
+router.delete("/:userId", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.userId);
+    fid
+    res.status(200).json({
+      message: `User with id ${req.params.userId} was deleted`,
+    });
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
 });
 
 module.exports = router;
