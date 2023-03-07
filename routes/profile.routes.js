@@ -39,14 +39,14 @@ router.get("/settings/:userId", async (req, res) => {
   }
 });
 
-//edit user
-router.put("/edit/:userId", async (req, res) => {
+//edit user (email and password)
+router.put("/edit/security/:userId", async (req, res) => {
   try {
-    const { email, password, name, phone , picture } = req.body;
+    const { email, password } = req.body;
 
     // Check if email or password or name are provided as empty strings
-    if (email === "" || password === "" || name === "") {
-      res.status(400).json({ message: "Provide email, password and name" });
+    if (email === "" || password === "") {
+      res.status(400).json({ message: "Provide email and password" });
       return;
     }
 
@@ -73,7 +73,7 @@ router.put("/edit/:userId", async (req, res) => {
 
     const response = await User.findByIdAndUpdate(
       req.params.userId,
-      { email, password: hashedPassword, name, phone, picture },
+      { email, password: hashedPassword },
       { new: true }
     );
     console.log(response);
@@ -83,7 +83,20 @@ router.put("/edit/:userId", async (req, res) => {
   }
 });
 
-
+//Edit user (name, phone, picture)
+router.put("/edit/:userId", async (req, res) => {
+  try {
+    const { name, phone, picture } = req.body;
+    const response = await User.findByIdAndUpdate(
+      req.params.userId,
+      { name, phone, picture },
+      { new: true }
+    );
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
 
 //UPLOAD IMAGE
 router.post("/upload", fileUpload.single("fileName"), async (req, res) => {

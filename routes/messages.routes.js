@@ -17,7 +17,6 @@ router.post("/send-sms", (req, res) => {
       });
       res.status(200).json("Message sent successfully");
     } catch (e) {
-      console.log("There was an error sending the message.");
       res.status(500).json(`Error sending message: ${e}`);
     }
   }
