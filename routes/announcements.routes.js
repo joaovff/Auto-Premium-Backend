@@ -50,9 +50,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
       res.status(400).json({ message: "Missing mandatory fields." });
       return;
     }
-    /* Confirmar com o Xico, sobre ao criar um novo announcement,
-         devemos passar a propriedade do _id do user, para associar
-         um ao outro */
+
     const response = await Announcement.create({
       title,
       description,
@@ -162,7 +160,7 @@ router.delete("/:announcementId", async (req, res) => {
       message: `Project with id ${req.params.announcementId} was deleted`,
     });
   } catch (e) {
-    res.status(500).json({ message: e });
+    res.status(500).json({ error: e });
   }
 });
 

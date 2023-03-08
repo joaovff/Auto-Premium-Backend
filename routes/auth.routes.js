@@ -129,11 +129,9 @@ router.get("/verify", isAuthenticated, (req, res) => {
   res.status(200).json(req.payload);
 });
 
-
 router.delete("/:userId", async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.userId);
-    await Announcement.deleteMany(...deletedUser.announcements, {}); 
     res.status(200).json({
       message: `User with id ${req.params.userId} was deleted`,
     });

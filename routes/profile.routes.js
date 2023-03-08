@@ -76,7 +76,6 @@ router.put("/edit/security/:userId", async (req, res) => {
       { email, password: hashedPassword },
       { new: true }
     );
-    console.log(response);
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
@@ -103,7 +102,7 @@ router.post("/upload", fileUpload.single("fileName"), async (req, res) => {
   try {
     res.status(200).json({ fileUrl: req.file.path });
   } catch (e) {
-    res.status(500).json({ message: "an error occurred" });
+    res.status(500).json({ message: "An error occurred." });
   }
 });
 
@@ -148,7 +147,7 @@ router.patch("/favorites/:userId", async (req, res) => {
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
-  }
+  } 
 });
 
 module.exports = router;
