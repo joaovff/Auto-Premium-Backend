@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const fileUpload = require("../config/cloudinary");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -28,7 +29,7 @@ router.get("/:userId", async (req, res) => {
 //Profile settings (edit and delete)
 
 //get profile
-router.get("/settings/:userId", async (req, res) => {
+router.get("/settings/:userId", isAuthenticated, async (req, res) => {
   try {
     const response = await User.findById(req.params.userId).populate(
       "announcements"
@@ -40,7 +41,7 @@ router.get("/settings/:userId", async (req, res) => {
 });
 
 //edit user (email and password)
-router.put("/edit/security/:userId", async (req, res) => {
+router.put("/edit/security/:userId", isAuthenticated, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -83,7 +84,7 @@ router.put("/edit/security/:userId", async (req, res) => {
 });
 
 //Edit user (name, phone, picture)
-router.put("/edit/:userId", async (req, res) => {
+router.put("/edit/:userId", isAuthenticated, async (req, res) => {
   try {
     const { name, phone, picture } = req.body;
     const response = await User.findByIdAndUpdate(
@@ -136,7 +137,7 @@ router.get("/favorites/:userId", async (req, res) => {
 });
 
 //Delete favorite
-router.patch("/favorites/:userId", async (req, res) => {
+router.patch("/favorites/:userId", isAuthenticated, async (req, res) => {
   try {
     const { itemId } = req.body;
     const response = await User.findByIdAndUpdate(
@@ -147,7 +148,7 @@ router.patch("/favorites/:userId", async (req, res) => {
     res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ message: e });
-  } 
+  }
 });
 
 module.exports = router;
