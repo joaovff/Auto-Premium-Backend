@@ -10,7 +10,7 @@ router.post("/send-sms", (req, res) => {
 
   async function sendSMS() {
     try {
-      const resp = await vonage.sms.send({
+      await vonage.sms.send({
         from: process.env.VONAGE_NUMBER,
         to,
         text,
