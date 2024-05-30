@@ -137,7 +137,7 @@ router.get("/favorites/:userId", async (req, res) => {
 });
 
 //Delete favorite
-router.patch("/favorites/:userId", isAuthenticated, async (req, res) => {
+router.patch("/favorites/:userId", async (req, res) => {
   try {
     const { itemId } = req.body;
     const response = await User.findByIdAndUpdate(
