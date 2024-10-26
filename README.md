@@ -58,14 +58,14 @@ This is the backend REST API for the Auto Premium project, built using **Node.js
 3. Set up environment variables:
 
 ```bash
-MONGODB_URI=your-mongodb-connection-string
-CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
-CLOUDINARY_API_KEY=your-cloudinary-api-key
-CLOUDINARY_API_SECRET=your-cloudinary-api-secret
-JWT_SECRET=your-jwt-secret
-VONAGE_API_KEY=your-vonage-api-key
-VONAGE_API_SECRET=your-vonage-api-secret
-GOOGLE_MAPS_API_KEY=your-google-maps-api-key
+  MONGODB_URI=your-mongodb-connection-string
+  CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
+  CLOUDINARY_API_KEY=your-cloudinary-api-key
+  CLOUDINARY_API_SECRET=your-cloudinary-api-secret
+  JWT_SECRET=your-jwt-secret
+  VONAGE_API_KEY=your-vonage-api-key
+  VONAGE_API_SECRET=your-vonage-api-secret
+  GOOGLE_MAPS_API_KEY=your-google-maps-api-key
 ```
 
 4. Running the Server
