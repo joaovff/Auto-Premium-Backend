@@ -2,10 +2,6 @@
 
 This is the backend REST API for the Auto Premium project, built using **Node.js** and **Express.js**. The API is designed to handle user authentication, car announcements, image uploads, and messaging via SMS. It also integrates with MongoDB for database management, Cloudinary for image storage, and provides geolocation services for precise location-based data.
 
-## Repository
-
-[**Auto Premium Backend**](https://github.com/joaovff/Auto-Premium-Backend)
-
 ## Tech Stack
 
 - **Backend Framework**: Node.js, Express.js
